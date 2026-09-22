@@ -1,0 +1,110 @@
+# ==============================================================================
+# SEGURIDAD Y PROTECCIÓN DE DATOS - .gitignore
+# Credit Risk Scoring Engine (FinTech / Data Science en Rust)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. SECRETOS, CREDENCIALES Y VARIABLES DE ENTORNO
+# (Prevención de fuga de contraseñas de BD, API Keys y tokens)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
+id_rsa*
+*.pub
+secrets/
+config/credentials.json
+pgpass.conf
+
+# ------------------------------------------------------------------------------
+# 2. PRIVACIDAD DE DATOS (PII / Datasets y Volúmenes de Producción)
+# (Protección contra exfiltración involuntaria de datos financieros de clientes)
+# ------------------------------------------------------------------------------
+# Datasets locales en crudo con datos financieros confidenciales
+*.csv.gz
+*.parquet
+*.feather
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.sql.gz
+# Si se desea versionar solo el esquema y no los datos crudos masivos:
+# data/*.csv
+
+# ------------------------------------------------------------------------------
+# 3. RUST / CARGO ARTIFACTS & BINARIOS
+# (Prevención de contaminación de compilación y binarios ejecutables)
+# ------------------------------------------------------------------------------
+/target/
+**/*.rs.bk
+*.pdb
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+Cargo.lock.backup
+
+# ------------------------------------------------------------------------------
+# 4. PYTHON / BENCHMARK & DATA ANALYTICS ARTIFACTS
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.coverage
+htmlcov/
+*.prof
+
+# ------------------------------------------------------------------------------
+# 5. DOCKER & POSTGRESQL VOLÚMENES PERSISTENTES
+# ------------------------------------------------------------------------------
+postgres_data/
+pgdata/
+docker-compose.override.yml
+
+# ------------------------------------------------------------------------------
+# 6. LOGS, TRAZAS DE AUDITORÍA Y MONITOREO
+# ------------------------------------------------------------------------------
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# ------------------------------------------------------------------------------
+# 7. ARCHIVOS TEMPORALES DE IDEs, SISTEMA OPERATIVO Y METADATA
+# ------------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.agents/
+.gemini/

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Risk Scoring Engine | FinTech Analytics</title>
+    <!-- Soporta renderizado sin conexión con fallbacks tipográficos del sistema -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <div class="logo-badge">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="brand-text">
+                <h1>Credit Risk Engine</h1>
+                <span>Rust Native Core • SOLID Architecture</span>
+            </div>
+        </div>
+        <div class="system-status">
+            <div class="status-dot"></div>
+            <span id="service-status">Engine Activo • Rust API v0.1.0</span>
+        </div>
+    </header>
+
+    <main>
+        <!-- KPI Overview Cards -->
+        <section class="kpi-grid">
+            <div class="glass-panel kpi-card">
+                <span class="kpi-title">Cartera Total Evaluada</span>
+                <span class="kpi-value" id="kpi-total-customers">36,457</span>
+                <span class="kpi-subtext"><span class="kpi-badge badge-blue">Buró Unificado</span> 100% deduplicado</span>
+            </div>
+            <div class="glass-panel kpi-card">
+                <span class="kpi-title">Tasa de Default (Basilea II)</span>
+                <span class="kpi-value" id="kpi-default-rate">1.69%</span>
+                <span class="kpi-subtext"><span class="kpi-badge badge-amber">Mora ≥ 60 días</span> 616 eventos severos</span>
+            </div>
+            <div class="glass-panel kpi-card">
+                <span class="kpi-title">Modelo Champion</span>
+                <span class="kpi-value" id="kpi-active-model" style="font-size: 1.35rem;">Random Forest</span>
+                <span class="kpi-subtext"><span class="kpi-badge badge-green">ROC-AUC: 1.000</span> PR-AUC: 1.000</span>
+            </div>
+            <div class="glass-panel kpi-card">
+                <span class="kpi-title">Throughput de Inferencia</span>
+                <span class="kpi-value" id="kpi-latency">~73,500 <span style="font-size: 1rem; font-weight: normal;">req/s</span></span>
+                <span class="kpi-subtext"><span class="kpi-badge badge-green">13.6 µs/req</span> Rayon Concurrente</span>
+            </div>
+        </section>
+
+        <!-- Benchmark y Modelos -->
+        <section class="glass-panel">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                    Evaluación y Comparación Rigurosa de Modelos Matemáticos
+                </h2>
+                <span class="kpi-badge badge-blue">Validado en Test Set (N=7,291)</span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Algoritmo / Modelo</th>
+                            <th>ROC-AUC</th>
+                            <th>PR-AUC</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1 Score</th>
+                            <th>Tiempo Entrenamiento</th>
+                            <th>Supuestos & Función Objetivo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="models-table-body">
+                        <tr>
+                            <td><strong>Random Forest (Champion)</strong></td>
+                            <td><span class="kpi-badge badge-green">1.0000</span></td>
+                            <td><span class="kpi-badge badge-green">1.0000</span></td>
+                            <td>1.0000</td>
+                            <td>1.0000</td>
+                            <td><strong>1.0000</strong></td>
+                            <td>1.38s (Rayon)</td>
+                            <td>Bagging no paramétrico, división óptima Gini, subsampling \(\sqrt{D}\)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Logistic Regression (L2)</strong></td>
+                            <td>1.0000</td>
+                            <td>1.0000</td>
+                            <td>0.9688</td>
+                            <td>1.0000</td>
+                            <td>0.9840</td>
+                            <td>3.69s</td>
+                            <td>Linealidad en log-odds, Binary Cross-Entropy con Ridge penalty</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gaussian Naive Bayes</strong></td>
+                            <td>1.0000</td>
+                            <td>1.0000</td>
+                            <td>1.0000</td>
+                            <td>1.0000</td>
+                            <td>1.0000</td>
+                            <td>47.79ms</td>
+                            <td>Independencia condicional condicional de features dadas la clase</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gradient Boosting (GBDT)</strong></td>
+                            <td>1.0000</td>
+                            <td>1.0000</td>
+                            <td>1.0000</td>
+                            <td>0.0000</td>
+                            <td>0.0000</td>
+                            <td>5.78s</td>
+                            <td>Boosting aditivo sobre pseudorresiduos de pérdida logística con shrinkage</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Simulador de Scoring y Explicabilidad -->
+        <div class="layout-columns">
+            <!-- Formulario de Evaluación en Tiempo Real -->
+            <section class="glass-panel">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        Simulador de Riesgo en Tiempo Real
+                    </h2>
+                </div>
+                <form id="score-form" class="simulator-form">
+                    <div class="form-group">
+                        <label>Edad del Solicitante (Años)</label>
+                        <input type="number" id="inp-age" value="38" step="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Años de Empleo Continuo</label>
+                        <input type="number" id="inp-employment" value="8" step="0.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ingreso Total Anual ($)</label>
+                        <input type="number" id="inp-income" value="350000" step="5000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Número de Dependientes / Hijos</label>
+                        <input type="number" id="inp-children" value="1" step="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Miembros Familiares Totales</label>
+                        <input type="number" id="inp-family" value="3" step="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Meses de Historial en Buró</label>
+                        <input type="number" id="inp-history-len" value="36" step="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tasa de Mora Histórica (0.0 = 0%, 0.1 = 10%)</label>
+                        <input type="number" id="inp-delinq-rate" value="0.0" step="0.01" min="0" max="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Atraso Máximo Registrado (0=Ninguno, 1=1-29d, 2=30-59d, 3=60d+)</label>
+                        <input type="number" id="inp-max-sev" value="0" step="1" min="0" max="6" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Posee Inmueble Propio</label>
+                        <select id="inp-realty">
+                            <option value="1">Sí (Propietario)</option>
+                            <option value="0">No (Alquiler / Otro)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Posee Vehículo</label>
+                        <select id="inp-car">
+                            <option value="1">Sí</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width" style="margin-top: 10px;">
+                        <button type="submit" class="btn-primary" id="btn-eval">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            Calcular Credit Score e Inferencia Rust
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Resultado del Score y Explicabilidad -->
+            <section class="glass-panel" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Scorecard & Decisión Automatizada
+                        </h2>
+                        <span id="decision-badge" class="kpi-badge badge-green">APROBADO</span>
+                    </div>
+
+                    <div class="score-display-card">
+                        <div class="score-gauge-container">
+                            <svg class="score-gauge-svg" viewBox="0 0 200 110">
+                                <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="16" stroke-linecap="round"/>
+                                <path id="score-arc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#10b981" stroke-width="16" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="30"/>
+                            </svg>
+                            <div class="score-number" id="res-score">782</div>
+                        </div>
+                        <div class="score-rating" id="res-band" style="color: var(--accent-emerald);">Riesgo Mínimo • Excelente</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                            Probabilidad de Incumplimiento: <strong id="res-prob" style="color: var(--text-primary);">0.08%</strong>
+                        </div>
+                    </div>
+
+                    <!-- Explicabilidad por variables (Waterfall) -->
+                    <div style="margin-top: 24px;">
+                        <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
+                            Factores Clave en la Decisión (Explainability)
+                        </h3>
+                        <div class="waterfall-container" id="waterfall-list">
+                            <!-- Inyectado dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Explorador de Clientes en Cartera -->
+        <section class="glass-panel">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        Explorador de Clientes en Cartera
+                    </h2>
+                </div>
+                <div class="search-box">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="cust-search" placeholder="Buscar por Customer ID...">
+                </div>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Edad</th>
+                            <th>Ingreso Anual</th>
+                            <th>Tasa de Mora Histórica</th>
+                            <th>Credit Score (FICO)</th>
+                            <th>Banda de Riesgo</th>
+                            <th>Decisión</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customers-table-body">
+                        <!-- Clientes inyectados desde /customers -->
+                    </tbody>
+                </table>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+                <span style="font-size: 0.85rem; color: var(--text-muted);" id="page-info">Mostrando página 1</span>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn-primary" id="btn-prev" style="padding: 6px 14px; font-size: 0.8rem;">Anterior</button>
+                    <button class="btn-primary" id="btn-next" style="padding: 6px 14px; font-size: 0.8rem;">Siguiente</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

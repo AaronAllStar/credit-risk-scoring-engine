@@ -1,0 +1,35 @@
+[package]
+name = "credit_risk_engine"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Serialization and Data Interchange
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+csv = "1.3"
+
+# Data manipulation and analytics
+polars = { version = "0.46", features = ["lazy", "temporal", "csv", "parquet"] }
+
+# Parallelism and Concurrency
+rayon = "1.10"
+tokio = { version = "1.43", features = ["full"] }
+
+# Web Framework and API
+axum = { version = "0.8", features = ["macros"] }
+tower-http = { version = "0.6", features = ["cors", "fs", "trace"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Math, Randomness and Optimization
+rand = "0.8"
+rand_distr = "0.4"
+
+# CLI
+clap = { version = "4.5", features = ["derive"] }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1

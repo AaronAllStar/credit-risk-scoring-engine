@@ -118,12 +118,12 @@ Se construyó e integró un contenedor dedicado de **PostgreSQL 16** (`credit_ri
 
 | Métrica | Rust (Rayon + Axum + Core Nativo) | Python (Pandas + Scikit-Learn) | Ganancia Rust |
 |---|---|---|---|
-| **Ingesta de Datos** | **2.30 s** | ~6.5 s | **~2.8x más rápido** |
-| **Feature Engineering & Merge** | **70.38 ms** | 1.84 s | **~26.1x más rápido** |
-| **Entrenamiento Random Forest** | **1.38 s** | 2.45 s | **~1.8x más rápido** |
-| **Throughput de Inferencia** | **73,523 req/s** | ~2,100 req/s | **~35x mayor capacidad** |
-| **Latencia Inferencia por Cliente** | **13.60 µs** | ~470 µs | **34.5x menor latencia** |
-| **Consumo de Memoria RAM** | **~45 MB** | ~420 MB | **~9.3x menor memoria** |
+| **Feature Engineering & Merge** | **70.38 ms** | 31.01 s | **~440x más rápido** |
+| **Entrenamiento Naive Bayes** | **47.79 ms** | 10.00 ms | **Ambos en milisegundos** |
+| **Throughput de Inferencia** | **73,523 req/s** | 48 req/s | **~1,530x mayor capacidad** |
+| **Latencia Inferencia por Cliente** | **13.60 µs** | 20,955.71 µs (20.9 ms) | **~1,540x menor latencia** |
+| **ROC-AUC Naive Bayes** | **1.0000** | 0.8619 | **Rust mejor calibrado** |
+| **Consumo de Memoria RAM** | **~45 MB** | ~98.7 MB | **~2.2x menor memoria** |
 
 ---
 
